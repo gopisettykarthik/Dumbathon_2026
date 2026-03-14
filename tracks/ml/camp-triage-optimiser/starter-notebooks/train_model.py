@@ -3,9 +3,13 @@ from xgboost import XGBRegressor
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import mean_absolute_error
 import joblib
+from xgboost import plot_importance
+import matplotlib.pyplot as plt
+
+
 
 # STEP 1 — Load dataset
-data = pd.read_csv("../datasets/dataset.csv")
+data = pd.read_csv("dataset.csv")
 
 # STEP 2 — Separate features and target
 X = data.drop("CaloriesNeeded", axis=1)
@@ -21,9 +25,9 @@ X_train, X_test, y_train, y_test = train_test_split(X,y,test_size=0.2)
 
 # STEP 5 — Build the model
 model = XGBRegressor(
-    n_estimators=300,
-    learning_rate=0.05,
-    max_depth=5,
+    n_estimators=500,
+    learning_rate=0.03,
+    max_depth=6,
     subsample=0.8,
     colsample_bytree=0.8
 )
@@ -47,3 +51,10 @@ print("Model saved as model.pkl")
 
 joblib.dump(feature_columns,"../columns.pkl")
 print("Model and columns saved.")
+
+preds = model.predict(X_test)
+
+print("Mean Absolute Error:", mean_absolute_error(y_test,preds))
+
+plot_importance(model)
+plt.show()

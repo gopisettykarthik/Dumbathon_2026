@@ -4,10 +4,10 @@ import joblib
 print("Camp Triage AI System")
 
 # load model
-model = joblib.load("../model.pkl")
+model = joblib.load("model.pkl")
 
 # load training columns
-model_columns = joblib.load("../columns.pkl")
+model_columns = joblib.load("columns.pkl")
 
 # get inputs
 name = input("Name: ")
